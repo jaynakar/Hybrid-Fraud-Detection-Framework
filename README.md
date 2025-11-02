@@ -30,16 +30,20 @@ This project presents a **Hybrid Fraud Detection Framework** that strategically 
 The framework follows a robust five-stage pipeline:
 
 ```mermaid
-flowchart TD
-A["Input: creditcard.csv"] --> B{Data Preprocessing & Balancing};
-B --> C[Autoencoder Training: Legitimate Transactions Only];
-C --> D{Feature Augmentation: Add Reconstruction Error};
-D --> E[Supervised Learning: Train RF & XGBoost];
-E --> F[Model Evaluation & Saving];
+flowchart LR
+A["Input:<br>creditcard.csv"] --> B["Data Preprocessing &<br>Balancing"]
+B --> C["Autoencoder Training:<br>Legitimate Transactions Only"]
+C --> D["Feature Augmentation:<br>Add Reconstruction Error"]
+D --> E["Supervised Learning:<br>Train RF & XGBoost"]
+E --> F["Model Evaluation & Saving"]
 
-style A fill:#f9f,stroke:#333
-style F fill:#aaf,stroke:#333
-style C fill:#ccf,stroke:#333
+%% --- Styles: professional corporate palette ---
+style A fill:#E7EEF7,stroke:#1E3A8A,stroke-width:2px,color:#111
+style B fill:#F0F4FF,stroke:#3B82F6,stroke-width:2px,color:#111
+style C fill:#F9F0FF,stroke:#7C3AED,stroke-width:2px,color:#111
+style D fill:#FFF5E5,stroke:#EAB308,stroke-width:2px,color:#111
+style E fill:#EDF7FF,stroke:#2563EB,stroke-width:2px,color:#111
+style F fill:#F4F4F5,stroke:#1E293B,stroke-width:2px,color:#111
 ```
 
 1.  **Data Preprocessing**: Handling missing values, applying **`StandardScaler`** normalization.
