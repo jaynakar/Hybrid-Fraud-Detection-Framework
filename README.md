@@ -103,8 +103,8 @@ F --> G["Fraud / Legitimate Prediction"]
 **Confusion Matrix:**
 
 ```
-[[56844   20]
- [   14   84]]
+ [56844   20]
+ [   14   84]
 ```
 
 | Metric    | Fraud Class |
