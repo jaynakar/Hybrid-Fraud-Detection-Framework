@@ -1,130 +1,193 @@
 ## 🧠 Hybrid Fraud Detection Framework
 
-A Semi-Supervised Model Combining Autoencoders and Supervised Machine Learning for Financial Fraud Detection.
+A Hybrid and Explainable Fraud Detection System integrating Autoencoder-based anomaly detection with supervised machine learning models.
 
 ---
 
-### ✨ Overview
+## 📌 Abstract
 
-In today’s digital financial ecosystem, **fraud detection** remains a major challenge due to the extreme **class imbalance** between legitimate and fraudulent transactions.
+Financial fraud detection remains a challenging task due to extreme class imbalance and continuously evolving fraudulent behavior. Traditional supervised models rely heavily on labeled historical data and often fail to generalize to unseen fraud patterns.
 
-This project proposes a **Hybrid Fraud Detection Framework** that integrates **Autoencoder-based anomaly detection** (unsupervised) with **supervised learning models** — namely **Random Forest (RF)** and **XGBoost (XGB)** — to improve detection of both known and unseen frauds.
+This project presents a **Hybrid Fraud Detection Framework** that combines **unsupervised anomaly detection (Autoencoder)** with **supervised classifiers (Random Forest and XGBoost)**. The Autoencoder is trained exclusively on legitimate transactions to learn normal behavior, and its **reconstruction error is used as a synthetic feature** to enhance fraud sensitivity.
 
-> **🎯 Primary Goal:** Achieve higher recall for minority (fraudulent) transactions while minimizing false negatives and improving robustness against evolving fraud patterns.
-
----
-
-### 🚀 Key Objectives
-
-| Status | Objective                        | Description                                                                                 |
-| :----: | :------------------------------- | :------------------------------------------------------------------------------------------ |
-|    ✅   | **Model Development**            | Built baseline models using Random Forest and XGBoost on the preprocessed dataset.          |
-|    ✅   | **Autoencoder Integration**      | Trained Autoencoder on legitimate transactions to generate anomaly (reconstruction) scores. |
-|   🟡   | **Imbalance Handling (Planned)** | SMOTE / ADASYN implementation planned in the next phase to handle data imbalance.           |
-|   🟡   | **Hybrid Enhancement (Planned)** | Integrate reconstruction error and supervised models into a unified hybrid pipeline.        |
-|   🔲   | **Explainability & Real-Time**   | Future stage: SHAP-based interpretability and API/Streamlit deployment.                     |
+The framework further incorporates **SMOTE-based balancing**, **threshold optimization**, and **SHAP-based explainability**, resulting in a robust, interpretable, and deployment-ready fraud detection system suitable for real-world financial environments.
 
 ---
 
-### 🏛️ System Architecture
+## 🎯 Objectives
+
+- Detect both known and previously unseen fraud patterns
+- Improve recall for minority (fraudulent) transactions
+- Reduce false negatives without significantly impacting precision
+- Provide explainable, regulator-friendly model outputs
+- Design a scalable framework suitable for real-world deployment
+
+---
+
+## 🏗️ System Architecture & Workflow
 
 ```mermaid
 flowchart LR
-A["Input:<br>creditcard.csv"] --> B["Data Preprocessing:<br>Scaling & Cleaning"]
-B --> C["Autoencoder Training:<br>Legitimate Data Only"]
-C --> D["Reconstruction Error:<br>Generate Anomaly Scores"]
-D --> E["Supervised Learning:<br>Train RF & XGBoost"]
-E --> F["Model Evaluation:<br>Accuracy, Recall, AUC"]
+A["Transaction Data"] --> B["Preprocessing & Normalization"]
+B --> C["Autoencoder<br>(Trained on Normal Data)"]
+C --> D["Reconstruction Error<br>(Anomaly Score)"]
+D --> E["Hybrid Features<br>(Original + RE)"]
+E --> F["Supervised Models<br>(RF / XGBoost)"]
+F --> G["Fraud / Legitimate Prediction"]
+````
 
-%% --- Professional styling ---
-style A fill:#E7EEF7,stroke:#1E3A8A,stroke-width:2px,color:#111
-style B fill:#F0F4FF,stroke:#3B82F6,stroke-width:2px,color:#111
-style C fill:#F9F0FF,stroke:#7C3AED,stroke-width:2px,color:#111
-style D fill:#FFF5E5,stroke:#EAB308,stroke-width:2px,color:#111
-style E fill:#EDF7FF,stroke:#2563EB,stroke-width:2px,color:#111
-style F fill:#F4F4F5,stroke:#1E293B,stroke-width:2px,color:#111
+---
+
+## ⚙️ Tools & Technologies
+
+| Category           | Tools                                |
+| ------------------ | ------------------------------------ |
+| Language           | Python 3.10+                         |
+| Machine Learning   | scikit-learn, XGBoost, TensorFlow    |
+| Imbalance Handling | imbalanced-learn (SMOTE)             |
+| Explainability     | SHAP                                 |
+| Data Processing    | pandas, numpy                        |
+| Visualization      | matplotlib, seaborn                  |
+| Model Persistence  | joblib, h5                           |
+| Dataset            | Kaggle – Credit Card Fraud Detection |
+
+---
+
+## ✅ Work Completed
+
+### 1. Autoencoder-Based Anomaly Detection
+
+* Trained Autoencoder exclusively on legitimate transactions
+* Fine-tuned latent dimension and dropout for improved anomaly sensitivity
+* Generated reconstruction error as an anomaly signal
+
+### 2. Hybrid Feature Engineering
+
+* Combined original transaction features with reconstruction error
+* Created hybrid feature space for supervised models
+
+### 3. Supervised Learning
+
+* Trained Random Forest and XGBoost on hybrid features
+* Evaluated baseline hybrid models
+
+### 4. SMOTE Integration
+
+* Applied SMOTE only on training data
+* Improved minority class (fraud) recall
+
+### 5. Threshold Optimization
+
+* Swept thresholds from 0.01 to 0.99
+* Selected operating threshold based on:
+
+  * Maximum recall with precision ≥ 0.80
+* Final selected model:
+
+  * **XGB_Hybrid_Final**
+  * **Threshold = 0.15**
+
+### 6. Explainability (SHAP)
+
+* Global SHAP summary and bar plots
+* Local SHAP force plots for fraud predictions
+* Verified that reconstruction error is among top influential features
+
+---
+
+## 📊 Final Model Performance (XGB Hybrid – Tuned Threshold)
+
+**Selected Model:** XGB_Hybrid_Final
+**Operating Threshold:** 0.15
+
+**Confusion Matrix:**
+
+```
+[[56844   20]
+ [   14   84]]
 ```
 
----
+| Metric    | Fraud Class |
+| --------- | ----------- |
+| Precision | 0.81        |
+| Recall    | 0.86        |
+| F1-Score  | 0.83        |
+| ROC-AUC   | 0.97        |
+| PR-AUC    | 0.87        |
 
-### 🛠️ Tools & Technologies
-
-| Category          | Tools / Libraries                            |
-| :---------------- | :------------------------------------------- |
-| **Language**      | Python 3.10+                                 |
-| **ML Libraries**  | scikit-learn, xgboost, tensorflow            |
-| **Data Handling** | pandas, numpy                                |
-| **Visualization** | matplotlib, seaborn                          |
-| **Model Saving**  | joblib, h5                                   |
-| **Dataset**       | Kaggle – Credit Card Fraud Detection Dataset |
+✅ Improved recall without significant loss in precision
+✅ Suitable for real-world fraud monitoring systems
 
 ---
 
-### 📊 Model Performance Summary
+## 📈 Key Visualizations
 
-| Metric                | Random Forest |   XGBoost  | Best Model |
-| :-------------------- | :-----------: | :--------: | :--------: |
-| **Accuracy**          |   **99.95%**  |   99.76%   |    🟩 RF   |
-| **Precision (Fraud)** |   **95.00%**  |   41.35%   |    🟩 RF   |
-| **Recall (Fraud)**    |     77.55%    | **87.76%** |   🟦 XGB   |
-| **F1-Score (Fraud)**  |    **0.85**   |    0.56    |    🟩 RF   |
-| **ROC-AUC**           |     0.9623    | **0.9708** |   🟦 XGB   |
-| **PR-AUC**            |   **0.8685**  |   0.8124   |    🟩 RF   |
-
-**Interpretation:**
-
-* RF excels in **precision** and overall balance (best for low false alarms).
-* XGB offers higher **recall**, capturing more frauds (fewer missed cases).
-* The hybrid concept aims to **combine both strengths** in the next iteration.
+* ROC Curve and Precision–Recall Curve
+* Hybrid vs SMOTE comparison
+* Autoencoder reconstruction error distribution
+* SHAP feature importance (bar, summary, and force plots)
 
 ---
 
-### 📈 Visualizations
+## 🧠 Explainability with SHAP
 
-* **ROC Curve** – XGBoost achieves slightly higher separability.
-* **Precision-Recall Curve** – Random Forest maintains better precision at higher recall.
-* **Confusion Matrix** – Strong classification performance for both models.
-* **Reconstruction Error Distribution** – Confirms Autoencoder’s anomaly signal effectiveness.
+SHAP analysis confirms that:
 
----
-
-### 🔮 Future Enhancements
-
-| Priority | Enhancement                     | Description                                                                   |
-| :------: | :------------------------------ | :---------------------------------------------------------------------------- |
-|    🟡    | **SMOTE / ADASYN Integration**  | Balance the dataset to reduce bias toward legitimate transactions.            |
-|    🟡    | **Hybrid Inference**            | Merge Autoencoder outputs directly into model training for unified detection. |
-|    🟢    | **Hyperparameter Optimization** | Fine-tune XGB/RF parameters for optimal recall.                               |
-|    🟣    | **SHAP Explainability**         | Add SHAP-based interpretability to visualize feature importance.              |
-|    🟢    | **Real-Time Deployment**        | Build a simple interface (e.g., Streamlit or FastAPI).                        |
+* Reconstruction Error is a high-impact feature
+* Transaction attributes (V-features and Amount) align with fraud risk
+* Model predictions are interpretable and regulator-friendly
 
 ---
 
-### 📂 Repository Structure
+## 📂 Repository Structure
 
 ```
 Hybrid-Fraud-Detection-Framework/
 │
-├── CreditCardFraudDetection.ipynb      # Main notebook
-├── autoencoder_model.h5                # Saved Autoencoder model
-├── rf_baseline.joblib                  # Random Forest model
-├── xgb_baseline.json                   # XGBoost model
-├── scaler_all.joblib                   # Data scaler
-└── README.md                           # Documentation
+├── main_notebook/
+│   ├── Hybrid_Fraud_Detection.ipynb
+│   ├── autoencoder_tuned_model.h5
+│   ├── rf_hybrid_final.joblib
+│   ├── xgb_hybrid_final.json
+│   ├── rf_hybrid_smote.joblib
+│   ├── xgb_hybrid_smote.json
+│
+├── data/
+│   ├── X_train_hybrid.csv
+│   ├── X_test_hybrid.csv
+│   ├── y_train.csv
+│   ├── y_test.csv
+│
+├── results/
+│   ├── Hybrid_vs_SMOTE.png
+│   ├── ROC_PR_Curves.png
+│   ├── SHAP_Summary.png
+│
+└── README.md
 ```
 
 ---
 
-### 🧾 Citation
+## 🔮 Future Scope
 
-**J. Nakar (2025)**
-“Hybrid Fraud Detection Framework using Autoencoders and Supervised ML for Imbalanced Transaction Data.”
+* Deployment using FastAPI or Streamlit
+* Real-time transaction streaming
+* Automated retraining and concept drift detection
+* Fraud monitoring dashboard
+
+---
+
+## 🧾 Citation
+
+J. Nakar (2025)
+**Hybrid Fraud Detection Framework using Autoencoders, SMOTE, and Explainable Machine Learning**
 
 ---
 
-### 🙏 Acknowledgement
+## 🙏 Acknowledgement
 
-Developed under the guidance of **Prof. Aswathy Nair**,
-Department of Computer Engineering, **Marwadi University**, India.
+Developed under the guidance of **Prof. Aswathy Nair**
+Department of Computer Engineering
+**Marwadi University, India**
 
----
+```
