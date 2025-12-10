@@ -1,0 +1,30 @@
+# ===== Python cache =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ===== Jupyter / Colab =====
+.ipynb_checkpoints/
+*.ipynb~ 
+.colab/
+
+# ===== Large datasets (do NOT push) =====
+data/*.csv
+data/*.npy
+creditcard.csv
+
+# ===== Model training artifacts (keep final ones only) =====
+*.ckpt
+*.tensorboard
+logs/
+runs/
+
+# ===== System files =====
+.DS_Store
+Thumbs.db
+
+# ===== Secrets =====
+*.env
+*.key
+*.token
