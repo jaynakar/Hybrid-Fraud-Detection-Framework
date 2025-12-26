@@ -8,7 +8,7 @@ A Hybrid and Explainable Fraud Detection System integrating Autoencoder-based an
 
 Financial fraud detection remains a challenging task due to extreme class imbalance and continuously evolving fraudulent behavior. Traditional supervised models rely heavily on labeled historical data and often fail to generalize to unseen fraud patterns.
 
-This project presents a **Hybrid Fraud Detection Framework** that combines **unsupervised anomaly detection (Autoencoder)** with **supervised classifiers (Random Forest and XGBoost)**. The Autoencoder is trained exclusively on legitimate transactions to learn normal behavior, and its **reconstruction error is used as a synthetic feature** to enhance fraud sensitivity.
+This project presents a **Hybrid Fraud Detection Framework** that combines **unsupervised anomaly detection (Autoencoder)** with **supervised classifiers (Random Forest and XGBoost)**. The Autoencoder is trained exclusively on legitimate transactions to learn normal behavior, and its **reconstruction error is used as an anomaly-aware derived feature** to enhance fraud sensitivity.
 
 The framework further incorporates **SMOTE-based balancing**, **threshold optimization**, and **SHAP-based explainability**, resulting in a robust, interpretable, and deployment-ready fraud detection system suitable for real-world financial environments.
 
@@ -78,7 +78,7 @@ F --> G["Fraud / Legitimate Prediction"]
 
 ### 5. Threshold Optimization
 
-* Swept thresholds from 0.01 to 0.99
+* Evaluated multiple decision thresholds to analyze precision–recall trade-offs
 * Selected operating threshold based on:
 
   * Maximum recall with precision ≥ 0.80
@@ -170,17 +170,17 @@ Hybrid-Fraud-Detection-Framework/
 
 ## 🔮 Future Scope
 
-* Deployment using FastAPI or Streamlit
-* Real-time transaction streaming
-* Automated retraining and concept drift detection
-* Fraud monitoring dashboard
+* Lightweight API-based deployment using FastAPI
+* Real-time transaction ingestion (streaming simulation)
+* Concept drift monitoring for evolving fraud patterns
+* Interactive fraud monitoring dashboard
 
 ---
 
 ## 🧾 Citation
 
 J. Nakar (2025)
-**Hybrid Fraud Detection Framework using Autoencoders, SMOTE, and Explainable Machine Learning**
+**Hybrid Fraud Detection Framework using Autoencoder-based Anomaly Detection and Explainable Supervised Learning**
 
 ---
 
