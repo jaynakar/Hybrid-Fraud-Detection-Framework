@@ -180,6 +180,7 @@ Hybrid-Fraud-Detection-Framework/
 ## 🧾 Citation
 
 J. Nakar (2025)
+
 **Hybrid Fraud Detection Framework using Autoencoder-based Anomaly Detection and Explainable Supervised Learning**
 
 ---
